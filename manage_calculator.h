@@ -56,6 +56,13 @@ public:
                 double b;
                 cout << "Keep adding numbers and then 'add' 0 if you want to see the result!\nWhat is you first number? ";
                 cin >> a;
+                if (cin.fail()) 
+                {
+                    cerr << "Error: Invalid input" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
                 cout << " \n" << endl;
                 string add_history = to_string(a);
                 string final_add_history = "";
@@ -94,6 +101,13 @@ public:
                 double b;
                 cout << "Keep substracting numbers and then 'substract' 0 if you want to see the result!\nWhat is you first number? ";
                 cin >> a;
+                if (cin.fail()) 
+                {
+                    cerr << "Error: Invalid input" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
                 cout << " \n" << endl;
                 string add_history = to_string(a);
                 string final_add_history = "";
@@ -269,6 +283,7 @@ public:
         }
 
     }
+
 
 
 };
