@@ -23,14 +23,34 @@ public:
             cout << "\n1 - add numbers up\n2 - substract\n3 - multiply\n4 - division\n5 - exponentation\n6 - exit app" << endl;
             cout << "What do you choose? " << endl;
 
+            bool invalidChoice = true;
             int choice;
-            cin >> choice;
+
+            while (invalidChoice == true)
+            {
+                cin >> choice;
+                if (cin.fail()) 
+                {
+                    cerr << "Error: Invalid input" << endl;
+                    cin.clear(); // Clear the fail state
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                } 
+                else if (choice < 1 || choice > 6) 
+                {
+                    cerr << "Error: Invalid choice. Please enter a number between 1 and 6." << endl;
+                } 
+                else
+                {
+                invalidChoice = false;
+                }
+
+            } 
 
             if (choice == 1)
             {
                 bool stop_add = false;
-                int a;
-                int b;
+                double a;
+                double b;
                 cout << "Keep adding numbers and then 'add' 0 if you want to see the result!\nWhat is you first number? ";
                 cin >> a;
                 cout << " \n" << endl;
@@ -66,8 +86,8 @@ public:
             else if (choice == 2)
             {
                 bool stop_s = false;
-                int a;
-                int b;
+                double a;
+                double b;
                 cout << "Keep substracting numbers and then 'substract' 0 if you want to see the result!\nWhat is you first number? ";
                 cin >> a;
                 cout << " \n" << endl;
@@ -98,6 +118,90 @@ public:
 
                 }
                 
+            }
+
+            else if (choice == 3)
+            {
+                bool stop_mult = false;
+                double a;
+                double b;
+                cout << "Keep adding numbers to multipy and then 'multiply' with 0 if you want to see the result!\nWhat is you first number? ";
+                cin >> a;
+                if (cin.fail()) 
+                {
+                    cerr << "Error: Invalid input" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
+                cout << " \n" << endl;
+                string add_history = to_string(a);
+                string final_add_history = "";
+                while (!stop_mult)
+                {
+                    add_history = add_history + " * ";
+                    cout << "\033[1A" << "\r" << add_history << flush;
+
+                    cin >> b;
+                    if (b != 0)
+                    {
+                        a = cal->multiply(a, b);
+                        add_history = add_history + to_string(b);
+                        final_add_history = add_history;
+
+                    }
+
+                    else
+                    {
+                        stop_mult = true;
+                        final_add_history = final_add_history + " = " + to_string(a);
+                        cout << "\033[1A" << "\r" << final_add_history << flush << endl;
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin.get();
+                    }
+
+                }
+            }
+
+            else if (choice == 4)
+            {
+                bool stop_div = false;
+                double a;
+                double b;
+                cout << "What is the number you want to divide? ";
+                cin >> a;
+                if (cin.fail()) 
+                {
+                    cerr << "Error: Invalid input" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
+                cout << " \n" << endl;
+                string add_history = to_string(a);
+
+                add_history = add_history + " / ";
+                cout << "\033[1A" << "\r" << add_history << flush;
+                cin >> b;
+                double c = cal->divide(a, b);
+
+                
+                string final_div_history = to_string(a) + " / " + to_string(b) + " = " + to_string(c);
+                cout << "\033[1A" << "\r" << final_div_history << flush << endl;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin.get();
+                
+                
+            }
+
+            else if (choice == 5)
+            {
+
+            }
+
+            else if (choice == 6)
+            {
+                stop = true;
             }
 
         }
