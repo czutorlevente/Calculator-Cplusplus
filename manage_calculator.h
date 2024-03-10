@@ -2,6 +2,8 @@
 #include <iostream>
 #include "calculator.h"
 #include <ctime>
+#include <fstream>
+#include <string>
 using namespace std;
 
 class Manager
@@ -13,6 +15,7 @@ public:
         
         bool stop = false;
         Calculator *cal = new Calculator();
+        ofstream memoryFile("memory.txt", std::ios::app);
 
         Greeting();
         cout << "Welcome to the Calculator app!" << endl;
@@ -77,6 +80,7 @@ public:
                         cout << "\033[1A" << "\r" << final_add_history << flush << endl;
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         cin.get();
+                        memoryFile << final_add_history << endl;
                     }
 
                 }
@@ -114,6 +118,7 @@ public:
                         cout << "\033[1A" << "\r" << final_add_history << flush << endl;
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         cin.get();
+                        memoryFile << final_add_history << endl;
                     }
 
                 }
@@ -158,6 +163,7 @@ public:
                         cout << "\033[1A" << "\r" << final_add_history << flush << endl;
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         cin.get();
+                        memoryFile << final_add_history << endl;
                     }
 
                 }
@@ -165,7 +171,6 @@ public:
 
             else if (choice == 4)
             {
-                bool stop_div = false;
                 double a;
                 double b;
                 cout << "What is the number you want to divide? ";
@@ -190,13 +195,37 @@ public:
                 cout << "\033[1A" << "\r" << final_div_history << flush << endl;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cin.get();
+                memoryFile << final_div_history << endl;
                 
                 
             }
 
             else if (choice == 5)
             {
+                double a;
+                double b;
+                cout << "Enter the base number: ";
+                cin >> a;
+                if (cin.fail()) 
+                {
+                    cerr << "Error: Invalid input" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
+                cout << " \n" << endl;
+                string add_history = to_string(a);
+                add_history = add_history + "^";
+                cout << "\033[1A" << "\r" << add_history << flush;
+                cin >> b;
+                double c = cal->power(a, b);
 
+                
+                string final_exp_history = to_string(a) + "^" + to_string(b) + " = " + to_string(c);
+                cout << "\033[1A" << "\r" << final_exp_history << flush << endl;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin.get();
+                memoryFile << final_exp_history << endl;
             }
 
             else if (choice == 6)
