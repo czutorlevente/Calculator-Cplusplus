@@ -10,6 +10,7 @@ class Manager
 {
 
 public:
+    //Play the program. Navigate throug the menu.
     void Play()
     {
         
@@ -22,8 +23,8 @@ public:
 
         while (!stop)
         {
-            
-            cout << "\n1 - add numbers up\n2 - substract\n3 - multiply\n4 - division\n5 - exponentation\n6 - exit app" << endl;
+            //The main menu
+            cout << "\n1 - add numbers up\n2 - substract\n3 - multiply\n4 - division\n5 - exponentation\n6 - read memory\n7 - exit app" << endl;
             cout << "What do you choose? " << endl;
 
             bool invalidChoice = true;
@@ -35,12 +36,12 @@ public:
                 if (cin.fail()) 
                 {
                     cerr << "Error: Invalid input" << endl;
-                    cin.clear(); // Clear the fail state
+                    cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 } 
-                else if (choice < 1 || choice > 6) 
+                else if (choice < 1 || choice > 7) 
                 {
-                    cerr << "Error: Invalid choice. Please enter a number between 1 and 6." << endl;
+                    cerr << "Error: Invalid choice. Please enter a number between 1 and 7." << endl;
                 } 
                 else
                 {
@@ -244,6 +245,14 @@ public:
 
             else if (choice == 6)
             {
+                cout << "These are the previous calculations:\n" << endl;
+                displayMemory();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin.get();
+            }
+
+            else if (choice == 7)
+            {
                 stop = true;
             }
 
@@ -252,6 +261,7 @@ public:
 
     }
 
+    //Greet the user based on the time of the day.
     void Greeting()
     {
         time_t currentTime = time(nullptr);
@@ -282,6 +292,16 @@ public:
             cout << "Good night!" << endl;
         }
 
+    }
+
+    void displayMemory()
+    {
+        ifstream memoryFile("memory.txt");
+        string line;
+        while (getline(memoryFile, line)) 
+        {
+            cout << line << endl;
+        }
     }
 
 
